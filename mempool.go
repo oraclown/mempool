@@ -10,7 +10,6 @@ import (
 	"strings"
 )
 
-// added extra field feePaid so i don't have to recalculate each time another transaction is added
 type Transaction struct {
 	txHash    string
 	gas       float64
@@ -123,8 +122,3 @@ func (mempool *Mempool) dumps(path string) {
 	}
 	w.Flush()
 }
-
-// don't need to pop last element, just check if insertIndex is last and capacity already 5000
-
-// write good docs/README
-// make it according to code style of Tellor
