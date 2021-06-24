@@ -6,5 +6,5 @@ func main() {
 		txHashes:     make(map[string]int),
 	}
 	mempool.ingestFile("transactions.txt")
-	mempool.dumps()
+	mempool.dumps("prioritized-transactions.txt")
 }

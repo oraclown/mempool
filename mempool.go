@@ -106,8 +106,8 @@ func (mempool *Mempool) ingestFile(path string) {
 }
 
 // Write mempool transactions to text file.
-func (mempool *Mempool) dumps() {
-	f, _ := os.Create("prioritized-transactions.txt")
+func (mempool *Mempool) dumps(path string) {
+	f, _ := os.Create(path)
 	w := bufio.NewWriter(f)
 
 	for i, tx := range mempool.transactions {
