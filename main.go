@@ -1,13 +1,9 @@
 package main
 
-import (
-	"github.com/owenburton/mempool/mempool"
-)
-
 func main() {
-	mempool := mempool.Mempool{
-		transactions: make([]mempool.Transaction, 0),
-		txHashes:     make(map[string]int, 0),
+	mempool := Mempool{
+		transactions: make([]Transaction, 0),
+		txHashes:     make(map[string]int),
 	}
 	mempool.ingestFile("transactions.txt")
 
@@ -20,5 +16,4 @@ func main() {
 	// }
 
 	mempool.dumps()
-
 }

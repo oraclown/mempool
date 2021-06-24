@@ -1,4 +1,4 @@
-package mempool
+package main
 
 import (
 	"bufio"
