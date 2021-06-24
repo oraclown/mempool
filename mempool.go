@@ -125,25 +125,6 @@ func (mempool *Mempool) dumps() {
 	w.Flush()
 }
 
-// func main() {
-// 	mempool := Mempool{
-// 		transactions: make([]Transaction, 0),
-// 		txHashes:     make(map[string]int, 0),
-// 	}
-// 	mempool.ingestFile("transactions.txt")
-
-// 	// for i, t := range mempool.transactions[:10] {
-// 	// 	if i == 10 {
-// 	// 		break
-// 	// 	}
-// 	// 	fmt.Println(t.feePaid)
-// 	// 	fmt.Println(t.feePerGas)
-// 	// }
-
-// 	mempool.dumps()
-
-// }
-
 // better user feedback messages when user submits duplicate transactions or their tx not added in general
 // is gas always going to be an integer?
 //
