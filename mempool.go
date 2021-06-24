@@ -35,9 +35,8 @@ func (mempool *Mempool) addTransaction(transaction Transaction) {
 
 		if len(mempool.transactions) < 5000 {
 			mempool.transactions = append(mempool.transactions, transaction)
-		} else {
-			return
 		}
+		return
 	}
 
 	// Find where transaction should be inserted in the mempool.
@@ -115,10 +114,9 @@ func (mempool *Mempool) dumps(path string) {
 			"Signature=" + tx.signature
 
 		if i != 4999 {
-			w.WriteString(line + "\n")
-		} else {
-			w.WriteString(line)
+			line = line + "\n"
 		}
+		w.WriteString(line)
 	}
 	w.Flush()
 }
