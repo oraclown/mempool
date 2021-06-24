@@ -37,7 +37,6 @@ func (mempool *Mempool) addTransaction(transaction Transaction) {
 		if len(mempool.transactions) < 5000 {
 			mempool.transactions = append(mempool.transactions, transaction)
 		} else {
-			// Provide more helpful message to user submitting the transaction.
 			return
 		}
 	}
@@ -125,24 +124,7 @@ func (mempool *Mempool) dumps(path string) {
 	w.Flush()
 }
 
-// better user feedback messages when user submits duplicate transactions or their tx not added in general
-// is gas always going to be an integer?
-//
-
-// for tests
-// test for empty file
-// test for empty transaction
-// test file more than 5000 transactions
-// file with duplicates
-//
-
-// bonus is add in sending back whether it's high to low priority fee
-// or just get what a high to low priority fee could be
-// function takes in the fee that you would pay and it would return the index you'd be at in the mempool
-
 // don't need to pop last element, just check if insertIndex is last and capacity already 5000
 
-// write tests
 // write good docs/README
 // make it according to code style of Tellor
-// push to github
