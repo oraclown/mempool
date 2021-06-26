@@ -1,0 +1,127 @@
+package mempool
+
+import (
+	"reflect"
+	"testing"
+	"time"
+)
+
+func TestTableMempool(t *testing.T) {
+	testCases := []struct {
+		name             string
+		currentTimestamp int64
+		startTime        int64
+		mempool          Mempool
+		transactions     []Transaction
+		expected         []Transaction
+	}{
+		{
+			"Add three different transactions.",
+			time.Now().Unix(),
+			time.Now().AddDate(0, 0, 1).Unix(),
+			Mempool{
+				transactions: make([]Transaction, 0),
+				txHashes:     make(map[string]int),
+			},
+			[]Transaction{
+				{
+					txHash:    "44AE613778AB20A20975AFD7B424A45ABA0248ABFA1FDEC59F82DBB493A6746F",
+					gas:       998000.0,
+					feePerGas: 0.9778525294520467,
+					feePaid:   975896.824393,
+					signature: "78C1DDA279E659F2983656B51E93304F23DAD3C5EA77AA6779E9F2B975FBA468BB3A4533A7E504669AD6DB1FCC4085FA35C2FB42360745F257276459BB285FE2",
+				},
+				{
+					txHash:    "57F0B7AC5270C8A8662ECF70B1576493ECDA0908427A496C4D006C681D739126",
+					gas:       992000.0,
+					feePerGas: 0.9801705373213622,
+					feePaid:   972329.173023,
+					signature: "41FBBD1759A64FBF6AC45E11E798C4BE230E93FC373D3C617542A0247D8384CBEA5C5B025BA71736AED4F8D0F30759FA1015831310DA864E48D000DD5759A64E",
+				},
+				{
+					txHash:    "3CD21B9492BF195DE745B264F8A480276B9F10B3966676F93594FF351706EDA8",
+					gas:       994000.0,
+					feePerGas: 0.9853713293244484,
+					feePaid:   979459.101349,
+					signature: "C0417EDFF1E7271A48FC1708D26FBD1A0988B92A9C77B8E7B47146D4BF4DEC23A6CD174E84966152A178CBD883736A51F7C36F3A7FC9393EC23033EF186F8E5A",
+				},
+			},
+			[]Transaction{
+				{
+					txHash:    "3CD21B9492BF195DE745B264F8A480276B9F10B3966676F93594FF351706EDA8",
+					gas:       994000.0,
+					feePerGas: 0.9853713293244484,
+					feePaid:   979459.101349,
+					signature: "C0417EDFF1E7271A48FC1708D26FBD1A0988B92A9C77B8E7B47146D4BF4DEC23A6CD174E84966152A178CBD883736A51F7C36F3A7FC9393EC23033EF186F8E5A",
+				},
+				{
+					txHash:    "44AE613778AB20A20975AFD7B424A45ABA0248ABFA1FDEC59F82DBB493A6746F",
+					gas:       998000.0,
+					feePerGas: 0.9778525294520467,
+					feePaid:   975896.824393,
+					signature: "78C1DDA279E659F2983656B51E93304F23DAD3C5EA77AA6779E9F2B975FBA468BB3A4533A7E504669AD6DB1FCC4085FA35C2FB42360745F257276459BB285FE2",
+				},
+				{
+					txHash:    "57F0B7AC5270C8A8662ECF70B1576493ECDA0908427A496C4D006C681D739126",
+					gas:       992000.0,
+					feePerGas: 0.9801705373213622,
+					feePaid:   972329.173023,
+					signature: "41FBBD1759A64FBF6AC45E11E798C4BE230E93FC373D3C617542A0247D8384CBEA5C5B025BA71736AED4F8D0F30759FA1015831310DA864E48D000DD5759A64E",
+				},
+			},
+		},
+		{
+			"Add duplicate transactions.",
+			time.Now().Unix(),
+			time.Now().AddDate(0, 0, 1).Unix(),
+			Mempool{
+				transactions: make([]Transaction, 0),
+				txHashes:     make(map[string]int),
+			},
+			[]Transaction{
+				{
+					txHash:    "3CD21B9492BF195DE745B264F8A480276B9F10B3966676F93594FF351706EDA8",
+					gas:       994000.0,
+					feePerGas: 0.9853713293244484,
+					feePaid:   979459.101349,
+					signature: "C0417EDFF1E7271A48FC1708D26FBD1A0988B92A9C77B8E7B47146D4BF4DEC23A6CD174E84966152A178CBD883736A51F7C36F3A7FC9393EC23033EF186F8E5A",
+				},
+				{
+					txHash:    "3CD21B9492BF195DE745B264F8A480276B9F10B3966676F93594FF351706EDA8",
+					gas:       994000.0,
+					feePerGas: 0.9853713293244484,
+					feePaid:   979459.101349,
+					signature: "C0417EDFF1E7271A48FC1708D26FBD1A0988B92A9C77B8E7B47146D4BF4DEC23A6CD174E84966152A178CBD883736A51F7C36F3A7FC9393EC23033EF186F8E5A",
+				},
+			},
+			[]Transaction{
+				{
+					txHash:    "3CD21B9492BF195DE745B264F8A480276B9F10B3966676F93594FF351706EDA8",
+					gas:       994000.0,
+					feePerGas: 0.9853713293244484,
+					feePaid:   979459.101349,
+					signature: "C0417EDFF1E7271A48FC1708D26FBD1A0988B92A9C77B8E7B47146D4BF4DEC23A6CD174E84966152A178CBD883736A51F7C36F3A7FC9393EC23033EF186F8E5A",
+				},
+			},
+		},
+	}
+
+	for idx, testCase := range testCases {
+		mempool := Mempool{
+			transactions: make([]Transaction, 0),
+			txHashes:     make(map[string]int),
+		}
+
+		for _, tx := range testCase.transactions {
+			mempool.AddTransaction(tx)
+		}
+
+		if !reflect.DeepEqual(mempool.transactions, testCase.expected) {
+			t.Errorf(
+				"Test %d: %s failed",
+				idx,
+				testCase.name,
+			)
+		}
+	}
+}
