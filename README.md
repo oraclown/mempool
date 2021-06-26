@@ -7,3 +7,5 @@
 - Function that takes a proposed transaction and returns to the user what its priority (index) in the mempool would be if added
 - Account for malicious actors (front-running, sandwhiching, etc.)?
 - In addTransaction, don't need to pop last element, just check if insertIndex is last and capacity already 5000
+- Add remove transaction function
+- Remove transactions once added to block

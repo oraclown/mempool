@@ -113,7 +113,7 @@ func TestTableMempool(t *testing.T) {
 		}
 
 		for _, tx := range testCase.transactions {
-			mempool.addTransaction(tx)
+			mempool.AddTransaction(tx)
 		}
 
 		if !reflect.DeepEqual(mempool.transactions, testCase.expected) {

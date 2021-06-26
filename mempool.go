@@ -23,7 +23,7 @@ type Mempool struct {
 	txHashes     map[string]int
 }
 
-func (mempool *Mempool) addTransaction(transaction Transaction) {
+func (mempool *Mempool) AddTransaction(transaction Transaction) {
 	// Skip duplicates.
 	if _, ok := mempool.txHashes[transaction.txHash]; ok {
 		return
@@ -59,7 +59,7 @@ func (mempool *Mempool) addTransaction(transaction Transaction) {
 }
 
 // Add transactions to mempool from text file.
-func (mempool *Mempool) ingestFile(path string) {
+func (mempool *Mempool) IngestFile(path string) {
 	file, err := os.Open(path)
 	if err != nil {
 		log.Fatal(err)
@@ -94,7 +94,7 @@ func (mempool *Mempool) ingestFile(path string) {
 			signature: signature,
 		}
 
-		mempool.addTransaction(temp)
+		mempool.AddTransaction(temp)
 	}
 
 	if err := scanner.Err(); err != nil {
@@ -103,7 +103,7 @@ func (mempool *Mempool) ingestFile(path string) {
 }
 
 // Write mempool transactions to text file.
-func (mempool *Mempool) dumps(path string) {
+func (mempool *Mempool) Dumps(path string) {
 	f, _ := os.Create(path)
 	w := bufio.NewWriter(f)
 
